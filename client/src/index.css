@@ -1,0 +1,19 @@
+.app-header {
+  height: 70px;
+  background-color: #0692c6;
+}
+
+.app-header__link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.app-header__link:hover {
+  color: white;
+}
+
+.container {
+  margin: 0 auto;
+  width: 970px;
+}
