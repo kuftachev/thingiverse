@@ -4,8 +4,7 @@
   "description": "Server Thingiverse REST to GraphQL test task.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc --build --clean & node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc & node dist/index.js",
     "watch": "concurrently \"npm run watch-ts\" \"npm run watch-node\"",
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w"

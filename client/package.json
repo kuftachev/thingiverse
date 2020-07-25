@@ -1,7 +1,7 @@
 {
   "name": "thingiverse-client",
   "version": "1.0.0",
-  "description": "Server Thingiverse REST to GraphQL test task.",
+  "description": "Client Thingiverse REST to GraphQL test task.",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.0.2",
