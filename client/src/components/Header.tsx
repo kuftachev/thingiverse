@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from '@reach/router'
+import { Link } from '@reach/router'
 import styled from '@emotion/styled'
 
 export default function Header() {
@@ -15,5 +15,7 @@ export default function Header() {
 }
 
 const LinkWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding-top: 20px;
 `

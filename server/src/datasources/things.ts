@@ -1,23 +1,21 @@
 import {RESTDataSource} from 'apollo-datasource-rest'
 import {URLSearchParams} from 'apollo-server-env'
-import {ThingsResponse, Thing, ThingsParams, SearchType} from '../types'
-
-const TOKEN = process.env.THINGIVERSE_TOKEN
+import {SearchType, Thing, ThingsParams, ThingsResponse} from '../types'
 
 export class ThingiverseAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'https://api.thingiverse.com/'
+    this.baseURL = process.env.THINGIVERSE_API_URL
   }
 
   async getThing(id: number): Promise<Thing> {
-    const sp = ThingiverseAPI.getBaseSearchParams()
+    const sp = this.getBaseSearchParams()
     const res = await this.get(`things/${id}`, sp)
     return ThingiverseAPI.thingResolver(res)
   }
 
   async getThings(params: ThingsParams): Promise<ThingsResponse> {
-    const sp = ThingiverseAPI.getBaseSearchParams()
+    const sp = this.getBaseSearchParams()
     const res = await this.get('search/things/', ThingiverseAPI.setThingsSearchParams(params, sp))
     return this.parseThingsResponse(res)
   }
@@ -33,7 +31,6 @@ export class ThingiverseAPI extends RESTDataSource {
       },
     }
   }
-
 
   private parseThingsResponse(data: any): ThingsResponse {
     if (typeof data === 'object' && data != null && data.hasOwnProperty('total') && data.hasOwnProperty('hits')) {
@@ -51,9 +48,9 @@ export class ThingiverseAPI extends RESTDataSource {
     }
   }
 
-  private static getBaseSearchParams(): URLSearchParams {
+  private getBaseSearchParams(): URLSearchParams {
     const sp = new URLSearchParams()
-    sp.set('access_token', TOKEN)
+    sp.set('access_token', this.context.userSession.token)
     return sp
   }
 
@@ -71,6 +68,8 @@ export class ThingiverseAPI extends RESTDataSource {
       case SearchType.Featured:
         sp.set('is_featured', 'true')
         break
+      default:
+        throw new Error('incorrect search type')
     }
 
     return sp
